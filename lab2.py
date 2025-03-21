@@ -47,7 +47,7 @@ def add_shapes(prepared_mask, image):
     # Draw contours and identify shapes
     output_image = image.copy()
     for contour in contours:
-        approx = cv2.approxPolyDP(contour, 0.02 * cv2.arcLength(contour, True), True)
+        approx = cv2.approxPolyDP(contour, 0.04 * cv2.arcLength(contour, True), True)
         x, y, w, h = cv2.boundingRect(approx)
 
         if len(approx) == 3:
@@ -59,10 +59,9 @@ def add_shapes(prepared_mask, image):
         else:
             shape_name = "Unknown"
 
-        # Draw bounding box
+        # Draw bounding box with text
         cv2.rectangle(output_image, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
-        # Put text label
         cv2.putText(output_image, shape_name, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
     return output_image
