@@ -35,8 +35,7 @@ def create_mask(image,
     kernel = np.ones((5, 5), np.uint8)
     # create mask
     cr_mask = cv2.erode(cr_mask, kernel, iterations=dilate_options[0])
-    # cr_mask = cv2.dilate(cr_mask, kernel, iterations=dilate_options[1])
-    cr_mask = cv2.morphologyEx(cr_mask, cv2.MORPH_CLOSE, kernel, iterations=dilate_options[2])
+    cr_mask = cv2.dilate(cr_mask, kernel, iterations=dilate_options[1])
     cr_mask = cv2.morphologyEx(cr_mask, cv2.MORPH_CLOSE, kernel, iterations=dilate_options[2])
     cr_mask = cv2.morphologyEx(cr_mask, cv2.MORPH_OPEN, kernel, iterations=dilate_options[3])
 
