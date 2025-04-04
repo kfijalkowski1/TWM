@@ -6,7 +6,7 @@ rng('default') ;
 % Liczba obrazów treningowych na klasę
 cnt_train = 70 ;
 
-% Liczba obrazów testowych na klasę
+% Number of test images per class
 cnt_test = 30;
 
 % Wybrane klasy obiektów
@@ -15,10 +15,10 @@ img_classes = {'deli', 'greenhouse', 'bathroom'};
 % Liczba cech wybierana na każdym obrazie
 feats_det = 100;
 
-% Metoda wyboru cech (true - jednorodnie w całym obrazie, false - najsilniejsze)
+% Feature selection method (true - uniformly across the entire image, false - strongest)
 feats_uniform = true;
 
-% Wielkość słownika
+% Dictionary size
 words_cnt = 30 ;
 
 % Detekcja cech
@@ -87,41 +87,56 @@ for i=1:length(imtest.Files)
     feats = extractFeatures(rgb2gray(I), pts);
     test_hist(i,:) = wordHist(feats, words);
 end
-%% SVM 
-objFun = @(params) svmObjectiveFunction(params, file_hist, imds.Labels);
 
-optimVars = [
-    optimizableVariable('BoxConstraint', [1e-3, 1e3], 'Transform', 'log')
-    optimizableVariable('KernelScale', [1e-3, 1e3], 'Transform', 'log')
-];
+%% SVM - przykład
+% Uczenie wieloklasowego klasyfikatora SVM o parametrach C i gamma.
+% Rozpoznawanie wielu klas opiera się na regule one-vs-one
+C_values = [0.001, 0.01, 0.1, 1, 10, 100];
+gamma_values = [0.001, 0.01, 0.1, 1, 10, 100];
 
-bayesResults = bayesopt(objFun, optimVars, ...
-    'MaxObjectiveEvaluations', 30, ...
-    'IsObjectiveDeterministic', false, ...
-    'AcquisitionFunctionName', 'expected-improvement-plus', ...
-    'Verbose', 1);
+best_C = 0;
+best_gamma = 0;
+best_accuracy = 0;
+results = zeros(length(C_values), length(gamma_values));
 
-bestParams = bayesResults.XAtMinEstimatedObjective;
-best_C = bestParams.BoxConstraint;
-best_gamma = bestParams.KernelScale;
-best_error = bayesResults.MinEstimatedObjective;
-best_accuracy = 1 - best_error;
-
-
-function error = svmObjectiveFunction(params, X, Y)
-    temp = templateSVM('KernelFunction', 'gaussian', ...
-                      'BoxConstraint', params.BoxConstraint, ...
-                      'KernelScale', params.KernelScale);
-    
-    model = fitcecoc(X, Y, 'Learners', temp);
-    
-    cvmodel = crossval(model, 'KFold', 5);
-    error = kfoldLoss(cvmodel);
+fprintf('Starting grid search for SVM parameters...\n');
+for i = 1:length(C_values)
+    for j = 1:length(gamma_values)
+        C = C_values(i);
+        gamma = gamma_values(j);
+        
+        temp = templateSVM('KernelFunction', 'gaussian', 'BoxConstraint', C, 'KernelScale', gamma);
+        
+        model = fitcecoc(file_hist, imds.Labels, 'Learners', temp);
+        
+        modelcv = crossval(model, 'KFold', 5);
+        cv_error = kfoldLoss(modelcv);
+        cv_accuracy = 1 - cv_error;
+        
+        results(i, j) = cv_accuracy;
+        
+        if cv_accuracy > best_accuracy
+            best_accuracy = cv_accuracy;
+            best_C = C;
+            best_gamma = gamma;
+        end
+        
+        fprintf('C=%f, gamma=%f: CV accuracy=%f\n', C, gamma, cv_accuracy);
+    end
 end
 
+fprintf('\nBest parameters found: C=%f, gamma=%f, CV accuracy=%f\n', best_C, best_gamma, best_accuracy);
 
-%% pomocnicze
+figure;
+imagesc(log10(gamma_values), log10(C_values), results);
+colorbar;
+xlabel('log10(gamma)');
+ylabel('log10(C)');
+title('Grid Search Results: CV Accuracy');
+set(gca, 'XTick', log10(gamma_values), 'XTickLabel', gamma_values);
+set(gca, 'YTick', log10(C_values), 'YTickLabel', C_values);
 
+%% Funkcje pomocnicze
 function pts = getFeaturePoints(I, pts_det, pts_uniform)
     if size(I, 3) > 1
         I2 = rgb2gray(I);
