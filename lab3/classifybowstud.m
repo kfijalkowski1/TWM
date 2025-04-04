@@ -31,7 +31,7 @@ words_cnt = 30 ;
 % Pełny zbiór dostępny jest na stronie autorów: <http://web.mit.edu/torralba/www/indoor.html 
 % http://web.mit.edu/torralba/www/indoor.html>
 
-imds_full = imageDatastore("indoor_images/", "IncludeSubfolders", true, "LabelSource", "foldernames");
+imds_full = imageDatastore("C:\Users\Użytkownik WEiTI\Desktop\twm_lab3\indoor_images", "IncludeSubfolders", true, "LabelSource", "foldernames");
 %countEachLabel(imds_full)
 
 % Wybór przykładowych klas i podział na zbiór treningowy i testowy
@@ -135,6 +135,7 @@ acctest = getAccuracy(predtest,labelstest) * 100 ;
  
 fprintf(1,'Accuracy train: %f\n', acc) ;
 fprintf(1,'Accuracy test: %f\n', acctest) ;
+
  
 %% Klasyfikator Regresji Logistycznej dla n-klas - modyfikacja liczby cech (bez regularyzacji)
 % Zadanie 2 - Uruchom proces uczenia klasyfikatora dla różnej liczby cech
@@ -170,40 +171,38 @@ for cnt_usedfeatures = feat_counts
     accsvalstd = [accsvalstd, std(accsval)] ;
 end
 
-% Rysowanie kosztów
-figure
-plot(feat_counts, costsall, feat_counts, costsvalall, 'LineWidth', 2) ;
-ylim([0 6])
-title('Funkcja kosztu vs. liczba cech') ;
-xlabel('Liczba cech') ; 
-ylabel('Funkcja kosztu') ;
-legend('Zb. treningowy','Zb. walidacyjny') ;
-
-% Rysowanie niepewności estymacji kosztów
-figure
-plot(feat_counts, costsstd, feat_counts, costsvalstd, 'LineWidth', 2) ;
-title('Odch. std. funkcji kosztu vs. liczba cech') ;
-xlabel('Liczba cech') ;
-ylabel('Odch. std. funkcji kosztu') ;
-legend('Zb. treningowy','Zb. walidacyjny') ;
-
-% Rysowanie skuteczności
-figure
-plot(feat_counts, accsall, feat_counts, accsvalall, 'LineWidth', 2) ;
-title('Skuteczność vs. liczba cech') ;
-xlabel('Liczba cech') ;
-ylabel('Skuteczność (%)') ;
-legend('Zb. treningowy','Zb. walidacyjny') ;
-
-% Rysowanie niepewności estymacji skuteczności
-figure
-plot(feat_counts, accsstd, feat_counts, accsvalstd, 'LineWidth', 2) ;
-title('Odch. std. skuteczności vs. liczba cech') ;
-xlabel('Liczba cech') ;
-ylabel('Odch. std. skuteczności') ;
-legend('Zb. treningowy','Zb. walidacyjny') ;
-
-return;
+% % Rysowanie kosztów
+% figure
+% plot(feat_counts, costsall, feat_counts, costsvalall, 'LineWidth', 2) ;
+% ylim([0 6])
+% title('Funkcja kosztu vs. liczba cech') ;
+% xlabel('Liczba cech') ; 
+% ylabel('Funkcja kosztu') ;
+% legend('Zb. treningowy','Zb. walidacyjny') ;
+% 
+% % Rysowanie niepewności estymacji kosztów
+% figure
+% plot(feat_counts, costsstd, feat_counts, costsvalstd, 'LineWidth', 2) ;
+% title('Odch. std. funkcji kosztu vs. liczba cech') ;
+% xlabel('Liczba cech') ;
+% ylabel('Odch. std. funkcji kosztu') ;
+% legend('Zb. treningowy','Zb. walidacyjny') ;
+% 
+% % Rysowanie skuteczności
+% figure
+% plot(feat_counts, accsall, feat_counts, accsvalall, 'LineWidth', 2) ;
+% title('Skuteczność vs. liczba cech') ;
+% xlabel('Liczba cech') ;
+% ylabel('Skuteczność (%)') ;
+% legend('Zb. treningowy','Zb. walidacyjny') ;
+% 
+% % Rysowanie niepewności estymacji skuteczności
+% figure
+% plot(feat_counts, accsstd, feat_counts, accsvalstd, 'LineWidth', 2) ;
+% title('Odch. std. skuteczności vs. liczba cech') ;
+% xlabel('Liczba cech') ;
+% ylabel('Odch. std. skuteczności') ;
+% legend('Zb. treningowy','Zb. walidacyjny') ;
 
 %% Klasyfikator Regresji Logistycznej dla n-klas - modyfikacja wielkości zbioru danych (bez regularyzacji)
 % Zadanie 3 - Uruchom proces uczenia klasyfikatora dla rosnącej wielkości
@@ -248,36 +247,36 @@ for subset_prop = 0.2:0.1:0.9
 end
 
 % Rysowanie kosztów
-figure
-plot(subset_sizes, costsall, subset_sizes, costsvalall, 'LineWidth', 2) ;
-title(strcat('Funkcja kosztu vs. wielkość zbioru danych numfeatures = ',num2str(num_features))) ;
-xlabel('Wielkość zbioru') ; 
-ylabel('Funkcja kosztu') ;
-legend('Zb. treningowy','Zb. walidacyjny') ;
-
-% Rysowanie niepewności estymacji kosztów
-figure
-plot(subset_sizes, costsstd, subset_sizes, costsvalstd, 'LineWidth', 2) ;
-title(strcat('Odch. std. funkcji kosztu vs. wielkość zbioru danych numfeatures = ',num2str(num_features))) ;
-xlabel('Wielkość zbioru') ; 
-ylabel('Odch. std. funkcji kosztu') ;
-legend('Zb. treningowy','Zb. walidacyjny') ;
-
-% Rysowanie skuteczności
-figure
-plot(subset_sizes, accsall, subset_sizes, accsvalall, 'LineWidth', 2) ;
-title(strcat('Skuteczność vs. wielkość zbioru danych numfeatures = ',num2str(num_features))) ;
-xlabel('Wielkość zbioru') ;
-ylabel('Skuteczność (%)') ;
-legend('Zb. treningowy','Zb. walidacyjny') ;
-
-% Rysowanie niepewności estymacji skuteczności
-figure
-plot(subset_sizes, accsstd, subset_sizes, accsvalstd, 'LineWidth', 2) ;
-title(strcat('Odch. std. skuteczności vs. wielkość zbioru danych numfeatures = ',num2str(num_features))) ;
-xlabel('Wielkość zbioru') ;
-ylabel('Odch. std. skuteczności') ;
-legend('Zb. treningowy','Zb. walidacyjny') ;
+% figure
+% plot(subset_sizes, costsall, subset_sizes, costsvalall, 'LineWidth', 2) ;
+% title(strcat('Funkcja kosztu vs. wielkość zbioru danych numfeatures = ',num2str(num_features))) ;
+% xlabel('Wielkość zbioru') ; 
+% ylabel('Funkcja kosztu') ;
+% legend('Zb. treningowy','Zb. walidacyjny') ;
+% 
+% % Rysowanie niepewności estymacji kosztów
+% figure
+% plot(subset_sizes, costsstd, subset_sizes, costsvalstd, 'LineWidth', 2) ;
+% title(strcat('Odch. std. funkcji kosztu vs. wielkość zbioru danych numfeatures = ',num2str(num_features))) ;
+% xlabel('Wielkość zbioru') ; 
+% ylabel('Odch. std. funkcji kosztu') ;
+% legend('Zb. treningowy','Zb. walidacyjny') ;
+% 
+% % Rysowanie skuteczności
+% figure
+% plot(subset_sizes, accsall, subset_sizes, accsvalall, 'LineWidth', 2) ;
+% title(strcat('Skuteczność vs. wielkość zbioru danych numfeatures = ',num2str(num_features))) ;
+% xlabel('Wielkość zbioru') ;
+% ylabel('Skuteczność (%)') ;
+% legend('Zb. treningowy','Zb. walidacyjny') ;
+% 
+% % Rysowanie niepewności estymacji skuteczności
+% figure
+% plot(subset_sizes, accsstd, subset_sizes, accsvalstd, 'LineWidth', 2) ;
+% title(strcat('Odch. std. skuteczności vs. wielkość zbioru danych numfeatures = ',num2str(num_features))) ;
+% xlabel('Wielkość zbioru') ;
+% ylabel('Odch. std. skuteczności') ;
+% legend('Zb. treningowy','Zb. walidacyjny') ;
 
 %% Klasyfikator Regresji Logistycznej dla n-klas - wczesne zatrzymanie (bez regularyzacji)
 % Zadanie 4 - Uruchom proces uczenia klasyfikatora w scenariuszu wcześniejszego 
@@ -296,25 +295,25 @@ features = [features, ones(size(features,1),1)] ;
 [Ws, costs, costsval, accs, accsval] = crossvalearly(features, imds.Labels, 0) ;
     
 % Rysowanie kosztów
-figure
-%plot(1:length(costs), costs, 1:length(costs), costsval, 'LineWidth', 2) ;
-plot(1:length(costs), costs, 1:length(costs), costsval, 'LineWidth', 2) ;
-title('Funkcja kosztu vs. liczba iteracji optymalizacji funkcji kosztu') ;
-xlabel('Liczba iteracji') ; 
-ylabel('Funkcja kosztu') ;
-legend('Zb. treningowy','Zb. walidacyjny') ;
-ylim([0,4]) ; %Lepsza widoczność
-
-% Rysowanie skuteczności
-figure
-plot(1:length(accs), accs, 1:length(accsval), accsval, 'LineWidth', 2) ;
-title('Skuteczność vs. liczba iteracji optymalizacji funkcji kosztu') ;
-xlabel('Liczba iteracji') ; 
-ylabel('Skuteczność') ;
+% figure
+% %plot(1:length(costs), costs, 1:length(costs), costsval, 'LineWidth', 2) ;
+% plot(1:length(costs), costs, 1:length(costs), costsval, 'LineWidth', 2) ;
+% title('Funkcja kosztu vs. liczba iteracji optymalizacji funkcji kosztu') ;
+% xlabel('Liczba iteracji') ; 
+% ylabel('Funkcja kosztu') ;
+% legend('Zb. treningowy','Zb. walidacyjny') ;
+% ylim([0,4]) ; %Lepsza widoczność
+% 
+% % Rysowanie skuteczności
+% figure
+% plot(1:length(accs), accs, 1:length(accsval), accsval, 'LineWidth', 2) ;
+% title('Skuteczność vs. liczba iteracji optymalizacji funkcji kosztu') ;
+% xlabel('Liczba iteracji') ; 
+% ylabel('Skuteczność') ;
 legend('Zb. treningowy','Zb. walidacyjny') ;
 
 % Wyniki dla zbioru uczącego
-sel_iter = 1 % Do wypełnienia w ramach zadania 
+sel_iter = 25 % Do wypełnienia w ramach zadania 
 pred = hfun1(Ws(:,:,sel_iter),featurestrain) ;
 acc = getAccuracy(pred,labelstrain) * 100 ;
 
@@ -349,7 +348,7 @@ accsstd = [] ;
 accsvalall = [] ;
 accsvalstd = [] ;
 
-lambdas = logspace(-15,5,15) ;
+lambdas = logspace(-4,-1,15) ;
 %lambdas = logspace(...) ; % Zagęszczenie próby...
 %lambdas = logspace(...) ; % Zagęszczenie próby...
 %lambdas = logspace(...) ; % Zagęszczenie próby...
@@ -371,37 +370,37 @@ for lambda = lambdas
     accsvalstd = [accsvalstd, std(accsval)] ;
 end
 
-% Rysowanie kosztów
-figure
-semilogx(lambdas, costsall, lambdas, costsvalall, 'LineWidth', 2) ;
-title('Funkcja kosztu vs. lambda') ;
-xlabel('Lambda') ; 
-ylabel('Funkcja kosztu') ;
-legend('Zb. treningowy','Zb. walidacyjny') ;
-
-% Rysowanie niepewności estymacji kosztów
-figure
-semilogx(lambdas, costsstd, lambdas, costsvalstd, 'LineWidth', 2) ;
-title('Odch. std. funkcji kosztu vs. lambda') ;
-xlabel('Lambda') ; 
-ylabel('Odch. std. funkcji kosztu') ;
-legend('Zb. treningowy','Zb. walidacyjny') ;
-
-% Rysowanie skuteczności
-figure
-semilogx(lambdas, accsall, lambdas, accsvalall, 'LineWidth', 2) ;
-title('Skuteczność vs. lambda') ;
-xlabel('Lambda') ;
-ylabel('Skuteczność (%)') ;
-legend('Zb. treningowy','Zb. walidacyjny') ;
-
-% Rysowanie niepewności estymacji skuteczności
-figure
-semilogx(lambdas, accsstd, lambdas, accsvalstd, 'LineWidth', 2) ;
-title('Odch. std. skuteczności vs. lambda') ;
-xlabel('Lambda') ;
-ylabel('Odch. std. skuteczności') ;
-legend('Zb. treningowy','Zb. walidacyjny') ;
+% % Rysowanie kosztów
+% figure
+% semilogx(lambdas, costsall, lambdas, costsvalall, 'LineWidth', 2) ;
+% title('Funkcja kosztu vs. lambda') ;
+% xlabel('Lambda') ; 
+% ylabel('Funkcja kosztu') ;
+% legend('Zb. treningowy','Zb. walidacyjny') ;
+% 
+% % Rysowanie niepewności estymacji kosztów
+% figure
+% semilogx(lambdas, costsstd, lambdas, costsvalstd, 'LineWidth', 2) ;
+% title('Odch. std. funkcji kosztu vs. lambda') ;
+% xlabel('Lambda') ; 
+% ylabel('Odch. std. funkcji kosztu') ;
+% legend('Zb. treningowy','Zb. walidacyjny') ;
+% 
+% % Rysowanie skuteczności
+% figure
+% semilogx(lambdas, accsall, lambdas, accsvalall, 'LineWidth', 2) ;
+% title('Skuteczność vs. lambda') ;
+% xlabel('Lambda') ;
+% ylabel('Skuteczność (%)') ;
+% legend('Zb. treningowy','Zb. walidacyjny') ;
+% 
+% % Rysowanie niepewności estymacji skuteczności
+% figure
+% semilogx(lambdas, accsstd, lambdas, accsvalstd, 'LineWidth', 2) ;
+% title('Odch. std. skuteczności vs. lambda') ;
+% xlabel('Lambda') ;
+% ylabel('Odch. std. skuteczności') ;
+% legend('Zb. treningowy','Zb. walidacyjny') ;
 
 %% Klasyfikator Regresji Logistycznej dla n-klas - z regularyzacją
 % Zadanie 6 - dla wybranej wartości parametru lambda przeprowadź uczenie na
@@ -409,7 +408,7 @@ legend('Zb. treningowy','Zb. walidacyjny') ;
 close all ;
 rng('default') ;
 
-lambda = 0 % Do wypełnienia w ramach zadania
+lambda = 0.002; % Do wypełnienia w ramach zadania
 featurestrain = file_hist ;
 featurestrain = [featurestrain, ones(size(featurestrain,1),1)] ;
 [W, cost] = trainsimple(featurestrain, imds.Labels, lambda) ;
