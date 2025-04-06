@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "twm-labs"
+version = "0.1.0"
+description = ""
+authors = ["kfijalkowski1 <k.1.fijalkowski@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+numpy = "^2.2.4"
+opencv-python = "^4.11.0.86"
+matplotlib = "^3.10.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
