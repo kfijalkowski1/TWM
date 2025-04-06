@@ -71,7 +71,6 @@ end
 
 % Klasteryzacja punktów 
 [idx, words, sumd, D] = kmeans(all_features, words_cnt, "MaxIter", 10000);
-% Visualization of calculated words
 
 % Wyznaczenie histogramów słów dla każdego obrazu treningowego
 file_hist = zeros(files_cnt, words_cnt);

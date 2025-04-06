@@ -6,7 +6,7 @@ rng('default') ;
 % Liczba obrazów treningowych na klasę
 cnt_train = 70 ;
 
-% Number of test images per class
+% Liczba obrazów testowych na klasę
 cnt_test = 30;
 
 % Wybrane klasy obiektów
@@ -15,10 +15,10 @@ img_classes = {'deli', 'greenhouse', 'bathroom'};
 % Liczba cech wybierana na każdym obrazie
 feats_det = 100;
 
-% Feature selection method (true - uniformly across the entire image, false - strongest)
+% Metoda wyboru cech (true - jednorodnie w całym obrazie, false - najsilniejsze)
 feats_uniform = true;
 
-% Dictionary size
+% Wielkość słownika
 words_cnt = 30 ;
 
 % Detekcja cech
@@ -71,7 +71,6 @@ end
 
 % Klasteryzacja punktów 
 [idx, words, sumd, D] = kmeans(all_features, words_cnt, "MaxIter", 10000);
-% Visualization of calculated words
 
 % Wyznaczenie histogramów słów dla każdego obrazu treningowego
 file_hist = zeros(files_cnt, words_cnt);
