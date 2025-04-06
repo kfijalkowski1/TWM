@@ -348,6 +348,7 @@ accsstd = [] ;
 accsvalall = [] ;
 accsvalstd = [] ;
 
+% inne testowane: -15,5,15, -6,-3,15
 lambdas = logspace(-4,-1,15) ;
 %lambdas = logspace(...) ; % Zagęszczenie próby...
 %lambdas = logspace(...) ; % Zagęszczenie próby...

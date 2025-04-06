@@ -91,8 +91,10 @@ end
 %% SVM - przykład
 % Uczenie wieloklasowego klasyfikatora SVM o parametrach C i gamma.
 % Rozpoznawanie wielu klas opiera się na regule one-vs-one
-C_values = [0.001, 0.01, 0.1, 1, 10, 100];
-gamma_values = [0.001, 0.01, 0.1, 1, 10, 100];
+% C_values = [0.001, 0.01, 0.1, 1, 10, 100];
+% gamma_values = [0.001, 0.01, 0.1, 1, 10, 100];
+C_values = logspace(-3, 2, 40);
+gamma_values = logspace(-3, 2, 40);
 
 best_C = 0;
 best_gamma = 0;
