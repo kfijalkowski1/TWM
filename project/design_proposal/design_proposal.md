@@ -2,6 +2,20 @@
 
 Celem projektu jest analiza wpływu obecności mgły na jakość modeli segmentacji semantycznej obrazów oraz ocena potencjalnych metod poprawy ich skuteczności 
 
+## Istniejące rozwiązania
+
+### Inne prace na podobne tematy:
+Istnieje wiele prac dotykających podobne zagadnienia, większość z nich jest bardzo zaawansowanymi rozwiązaniami prezentującymi wspaniałe wyniki, aczkolwiek w ramach naszego podejścia chcieliśmy wykorzystać istniejące architektury w celu sprawdzenia ich skuteczności
+- [Learning Fog-invariant Features for Foggy Scene Segmentation](https://arxiv.org/abs/2204.01587) - bardzo dobre wyniki, aczkolwiek złożona implementacja
+- [FogAdapt: Self-Supervised Domain Adaptation for Semantic Segmentation of Foggy Images](https://arxiv.org/abs/2201.02588)
+
+
+### Popularne sposoby usuwania mgły
+- [Dark Channel Prior](https://www.sciencedirect.com/topics/computer-science/dark-channel-prior) -- Bardzo skuteczna przy umiarkowanej mgle, ale wolna
+ - [CLAHE](https://docs.opencv.org/4.x/d5/daf/tutorial_py_histogram_equalization.html) - Tak na prawdę zwiększa kontrast lokalny, szybka i prosta, ale nie usuwa mgły i może pogorszyć obraz
+
+
+
 ## Zbiory danych 
 
 ### CityScapes
