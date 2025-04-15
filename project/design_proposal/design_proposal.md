@@ -66,6 +66,8 @@ Porównanie jakości segmentacji dla scenariuszy:
 - ~~Generalizacja modelu do zdjęć zwykłych i zamglonych przez regularyzację ukrytych reprezentacji~~
 - ~~Fine-tuning całej sieci vs samego dekodera - innymi słowy, czy zdjęcia zamglone wymagają innej reprezentacji, czy reprezentacja jest w porządku, ale zmienia się sposób jej dekodowania~~
 
++ predykcje testowe na arbitralnych zdjęciach spoza rozkładu, np silny deszcz, scena inna niż miejska
+
 ## Implementacja
 
 - PyTorch / PyTorch Lightning
