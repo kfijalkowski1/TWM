@@ -62,9 +62,9 @@ Porównanie jakości segmentacji dla scenariuszy:
 - Model trenowany na CS, usuwanie mgły HazeFormerem dostrojonym na podzbiorze FCS i ewaluacja na jego pozostałej części
 - Model trenowany na CS dostrojony na FCS
 
-Do rozważenia:
-- Generalizacja modelu do zdjęć zwykłych i zamglonych przez regularyzację ukrytych reprezentacji
-- Fine-tuning całej sieci vs samego dekodera - innymi słowy, czy zdjęcia zamglone wymagają innej reprezentacji, czy reprezentacja jest w porządku, ale zmienia się sposób jej dekodowania
+~~Do rozważenia:~~
+- ~~Generalizacja modelu do zdjęć zwykłych i zamglonych przez regularyzację ukrytych reprezentacji~~
+- ~~Fine-tuning całej sieci vs samego dekodera - innymi słowy, czy zdjęcia zamglone wymagają innej reprezentacji, czy reprezentacja jest w porządku, ale zmienia się sposób jej dekodowania~~
 
 ## Implementacja
 
