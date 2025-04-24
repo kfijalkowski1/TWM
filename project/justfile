@@ -1,0 +1,32 @@
+# call `just` to setup the environment - this operation is idempotent
+default: setup
+
+# prepare the environment
+setup:
+    #!/usr/bin/env -S bash -euo pipefail
+    pdm install --with dev
+    pdm run pre-commit install
+    TOKEN=""
+    read -s -p "Paste your wandb token: " TOKEN
+    perl -pe "s/^(WANDB_TOKEN=).*$/\1\Q$TOKEN\E/" .env.sample > .env
+
+# download cityscapes and foggy cityscapes datasets
+get-data:
+    #!/usr/bin/env -S bash -euo pipefail
+    cd data
+    USERNAME=""
+    read -p "Enter username: " USERNAME
+    PASSWORD=""
+    read -s -p "Enter password: " PASSWORD
+    mkdir -p raw
+    mkdir -p raw/cityscapes
+    mkdir -p raw/foggy_cityscapes
+    wget --keep-session-cookies --save-cookies=cookies.txt --post-data "username=$USERNAME&password=$PASSWORD&submit=Login" https://www.cityscapes-dataset.com/login/ -O /dev/null
+    wget --load-cookies cookies.txt --content-disposition https://www.cityscapes-dataset.com/file-handling/?packageID=3
+    unzip leftImg8bit_trainvaltest.zip -d raw/cityscapes
+    rm leftImg8bit_trainvaltest.zip
+    wget --keep-session-cookies --save-cookies=cookies.txt --post-data "username=$USERNAME&password=$PASSWORD&submit=Login" https://www.cityscapes-dataset.com/login/ -O /dev/null
+    wget --load-cookies cookies.txt --content-disposition https://www.cityscapes-dataset.com/file-handling/?packageID=29
+    unzip leftImg8bit_trainvaltest_foggy.zip -d raw/foggy_cityscapes
+    rm leftImg8bit_trainvaltest_foggy.zip
+    rm cookies.txt

@@ -1,6 +1,6 @@
 # Segmentacja semantyczna obrazów w warunkach mgły
 
-Celem projektu jest analiza wpływu obecności mgły na jakość modeli segmentacji semantycznej obrazów oraz ocena potencjalnych metod poprawy ich skuteczności 
+Celem projektu jest analiza wpływu obecności mgły na jakość modeli segmentacji semantycznej obrazów oraz ocena potencjalnych metod poprawy ich skuteczności
 
 ## Istniejące rozwiązania
 
@@ -16,7 +16,7 @@ Istnieje wiele prac dotykających podobne zagadnienia, większość z nich jest 
 
 
 
-## Zbiory danych 
+## Zbiory danych
 
 ### CityScapes
 
@@ -75,7 +75,7 @@ Porównanie jakości segmentacji dla scenariuszy:
 - Śledzenie eksperymentów - Weights and Biases
 - Strojenie hiperparametrów - Optuna / Weights and Biases Sweeps
 - Implementacje modeli:
-  - DeepLabV3(+): 
+  - DeepLabV3(+):
     - https://pytorch.org/hub/pytorch_vision_deeplabv3_resnet101/
     - https://github.com/VainF/DeepLabV3Plus-Pytorch
   - DehazeFormer:

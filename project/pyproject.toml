@@ -1,0 +1,84 @@
+[project]
+name = "twm"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "towienko", email = "tomasz.owienko.stud@pw.edu.pl"},
+]
+dependencies = ["python-dotenv>=1.1.0", "torch>=2.7.0", "torchvision>=0.22.0", "pytorch-lightning>=2.5.1", "wandb>=0.19.10", "numpy>=2.2.5", "pandas>=2.2.3", "jupyter>=1.1.1", "matplotlib>=3.10.1"]
+requires-python = "==3.13.*"
+readme = "README.md"
+license = {text = "MIT"}
+
+
+[project.optional-dependencies]
+dev = [
+    "rust-just>=1.40.0",
+    "ruff>=0.11.7",
+    "pre-commit>=4.2.0",
+]
+[tool.pdm]
+distribution = false
+
+
+[tool.ruff]
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+]
+target-version = "py311"
+indent-width = 4
+line-length = 120
+
+[tool.ruff.lint]
+# By default, Ruff enables Flake8's E and F rules
+# Pyflakes - F, pycodestyle - E, W
+# flake8-builtins - A
+# Pylint - PLC, PLE, PLW
+# isort - I
+select = ['E', 'F', 'W', 'A', 'PLC', 'PLE', 'PLW', 'I', 'FAST']
+ignore = [
+    # LineTooLong
+    "E501",
+    # DoNotAssignLambda
+    "E731",
+]
+# Allow fix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = []
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.format]
+# Like Black, indent with spaces, rather than tabs.
+indent-style = "space"
+
+# Like Black, respect magic trailing commas.
+skip-magic-trailing-comma = false
+
+# Like Black, automatically detect the appropriate line ending.
+line-ending = "auto"
