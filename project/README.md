@@ -2,6 +2,7 @@
 
 ## Prerequisites
 
+- Python 3.13
 - [pdm](https://pdm-project.org/en/latest/)
   - `pipx install pdm`
 - [just](https://just.systems/man/en/)
@@ -26,3 +27,9 @@ Download datasets:
 just get-data
 ```
 Note: you will be prompted to enter your CityScapes credentials
+
+Fetch external repositories:
+
+```shell
+just fetch-repos
+```

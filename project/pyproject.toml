@@ -5,7 +5,7 @@ description = "Default template for PDM package"
 authors = [
     {name = "towienko", email = "tomasz.owienko.stud@pw.edu.pl"},
 ]
-dependencies = ["python-dotenv>=1.1.0", "torch>=2.7.0", "torchvision>=0.22.0", "pytorch-lightning>=2.5.1", "wandb>=0.19.10", "numpy>=2.2.5", "pandas>=2.2.3", "jupyter>=1.1.1", "matplotlib>=3.10.1"]
+dependencies = ["python-dotenv>=1.1.0", "torch>=2.7.0", "torchvision>=0.22.0", "pytorch-lightning>=2.5.1", "wandb>=0.19.10", "numpy>=2.2.5", "pandas>=2.2.3", "jupyter>=1.1.1", "matplotlib>=3.10.1", "timm>=1.0.15"]
 requires-python = "==3.13.*"
 readme = "README.md"
 license = {text = "MIT"}
@@ -17,8 +17,10 @@ dev = [
     "ruff>=0.11.7",
     "pre-commit>=4.2.0",
 ]
-[tool.pdm]
-distribution = false
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
 
 
 [tool.ruff]
@@ -51,7 +53,7 @@ exclude = [
     "site-packages",
     "venv",
 ]
-target-version = "py311"
+target-version = "py313"
 indent-width = 4
 line-length = 120
 
@@ -61,7 +63,7 @@ line-length = 120
 # flake8-builtins - A
 # Pylint - PLC, PLE, PLW
 # isort - I
-select = ['E', 'F', 'W', 'A', 'PLC', 'PLE', 'PLW', 'I', 'FAST']
+select = ['E', 'F', 'W', 'A', 'PLC', 'PLE', 'PLW', 'I']
 ignore = [
     # LineTooLong
     "E501",
