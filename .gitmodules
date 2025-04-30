@@ -1,0 +1,6 @@
+[submodule "project/twm/external/deeplab_v3plus"]
+	path = project/twm/external/deeplab_v3plus
+	url = https://github.com/VainF/DeepLabV3Plus-Pytorch
+[submodule "project/twm/external/dehazeformer"]
+	path = project/twm/external/dehazeformer
+	url = https://github.com/IDKiro/DehazeFormer.git

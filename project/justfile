@@ -1,0 +1,61 @@
+# call `just` to setup the environment - this operation is idempotent
+default: setup
+
+# prepare the environment
+setup:
+    #!/usr/bin/env -S bash -euo pipefail
+    pdm install --with dev
+    pdm run pre-commit install
+    TOKEN=""
+    read -s -p "Paste your wandb token: " TOKEN
+    perl -pe "s/^(WANDB_TOKEN=).*$/\1\Q$TOKEN\E/" .env.sample > .env
+
+# download cityscapes and foggy cityscapes datasets
+get-data:
+    #!/usr/bin/env -S bash -euo pipefail
+    heading () {
+        BLUE_BG=$'\033[44m'
+        NC=$'\e[0m'
+        echo "${BLUE_BG}$1${NC}"
+    }
+
+    mkdir -p data
+    cd data
+    USERNAME=""
+    read -p "Enter username: " USERNAME
+    PASSWORD=""
+    read -s -p "Enter password: " PASSWORD
+    mkdir -p cityscapes
+    mkdir -p temp
+
+    heading "Fetching ground truth data..."
+    wget --keep-session-cookies --save-cookies=temp/cookies.txt --post-data "username=$USERNAME&password=$PASSWORD&submit=Login" https://www.cityscapes-dataset.com/login/ -O /dev/null
+    wget --load-cookies temp/cookies.txt --content-disposition https://www.cityscapes-dataset.com/file-handling/?packageID=1 -O temp/gtFine_trainvaltest.zip
+    unzip temp/gtFine_trainvaltest.zip -d temp/gtFine_trainvaltest
+    mv temp/gtFine_trainvaltest/gtFine cityscapes/gtFine
+    rm temp/gtFine_trainvaltest.zip
+
+    heading "Fetching CityScapes..."
+    wget --keep-session-cookies --save-cookies=temp/cookies.txt --post-data "username=$USERNAME&password=$PASSWORD&submit=Login" https://www.cityscapes-dataset.com/login/ -O /dev/null
+    wget --load-cookies temp/cookies.txt --content-disposition https://www.cityscapes-dataset.com/file-handling/?packageID=3 -O temp/leftImg8bit_trainvaltest.zip
+    unzip temp/leftImg8bit_trainvaltest.zip -d temp/cityscapes
+    mv temp/cityscapes/leftImg8bit cityscapes/leftImg8bit
+    rm temp/leftImg8bit_trainvaltest.zip
+
+    heading "Fetching FoggyCityScapes..."
+    wget --keep-session-cookies --save-cookies=temp/cookies.txt --post-data "username=$USERNAME&password=$PASSWORD&submit=Login" https://www.cityscapes-dataset.com/login/ -O /dev/null
+    wget --load-cookies temp/cookies.txt --content-disposition https://www.cityscapes-dataset.com/file-handling/?packageID=29 -O temp/leftImg8bit_trainvaltest_foggy.zip
+    unzip temp/leftImg8bit_trainvaltest_foggy.zip -d temp/foggy_cityscapes
+    mv temp/foggy_cityscapes/leftImg8bit_foggy cityscapes/leftImg8bit_foggy
+    rm temp/leftImg8bit_trainvaltest_foggy.zip
+
+    heading "Cleaning up..."
+    rm -rf temp
+    heading "DONE!"
+
+# fetch external repositories used by the project
+fetch-repos:
+    #!/usr/bin/env -S bash -euo pipefail
+    git submodule update --init --recursive
+    touch twm/external/deeplab_v3plus/__init__.py
+    touch twm/external/dehazeformer/__init__.py

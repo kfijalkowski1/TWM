@@ -1,0 +1,26 @@
+files: ^project/
+repos:
+- repo: local
+  hooks:
+    - id: pdm-lock-check
+      name: pdm lock
+      language: system
+      entry: bash -c 'cd project && exec pdm lock --check'
+      pass_filenames: true
+    - id: pdm-sync
+      name: pdm sync
+      language: system
+      entry: bash -c 'cd project && exec pdm sync'
+      pass_filenames: true
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.11.2
+  hooks:
+    - id: ruff
+      args: [ --fix ]
+    - id: ruff-format
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+    - id: trailing-whitespace
+    - id: end-of-file-fixer
+    - id: mixed-line-ending
