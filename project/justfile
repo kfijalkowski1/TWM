@@ -39,19 +39,19 @@ get-data:
     wget --keep-session-cookies --save-cookies=temp/cookies.txt --post-data "username=$USERNAME&password=$PASSWORD&submit=Login" https://www.cityscapes-dataset.com/login/ -O /dev/null
     wget --load-cookies temp/cookies.txt --content-disposition https://www.cityscapes-dataset.com/file-handling/?packageID=3 -O temp/leftImg8bit_trainvaltest.zip
     unzip temp/leftImg8bit_trainvaltest.zip -d temp/cityscapes
-    mv temp/cityscapes/leftImg8bit cityscapes/leftImg8bit
+    mv temp/cityscapes/leftImg8bit cityscapes/leftImg8bit_org
     rm temp/leftImg8bit_trainvaltest.zip
 
     heading "Fetching FoggyCityScapes..."
     wget --keep-session-cookies --save-cookies=temp/cookies.txt --post-data "username=$USERNAME&password=$PASSWORD&submit=Login" https://www.cityscapes-dataset.com/login/ -O /dev/null
     wget --load-cookies temp/cookies.txt --content-disposition https://www.cityscapes-dataset.com/file-handling/?packageID=29 -O temp/leftImg8bit_trainvaltest_foggy.zip
     unzip temp/leftImg8bit_trainvaltest_foggy.zip -d temp/foggy_cityscapes
-    mv temp/foggy_cityscapes/leftImg8bit_foggy cityscapes/leftImg8bit_foggy
+    mv temp/foggy_cityscapes/leftImg8bit_foggy cityscapes/leftImg8bit
     rm temp/leftImg8bit_trainvaltest_foggy.zip
 
     heading "Fetching pretrained ..."
     mkdir checkpoints
-    wget -O checkpoints/cityscapes.pth  https://www.dropbox.com/scl/fo/i4k86qqiuzy33aawug287/ABz2JiKdDqjwvDDzMHpeKZI\?e\=1\&preview\=best_deeplabv3plus_mobilenet_cityscapes_os16.pth\&rlkey\=fgm7rgpeankeh9394j492sxif\&st\=mxtfkqqh\&dl\=0
+    wget -O checkpoints/deeplabv3plus_mobilenet_cityscapes.pth  "https://www.dropbox.com/scl/fo/i4k86qqiuzy33aawug287/AJZbFCPIvT521xW8lekSDr8/best_deeplabv3plus_mobilenet_cityscapes_os16.pth?rlkey=fgm7rgpeankeh9394j492sxif&dl=1"
 
     heading "Cleaning up..."
     rm -rf temp

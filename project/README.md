@@ -41,12 +41,19 @@ just fetch-repos
 
 Run the command on forked deeplab repo to train with foggy data:
 ```shell
-python twm/external/deeplab_forked/main.py --data_root "data/cityscapes" --dataset "cityscapes"\
- --ckpt "checkpoint/cityscapes.pth" --continue_training
+pdm run python3 twm/external/deeplab_forked/main.py --data_root "data/cityscapes" --dataset "cityscapes"\
+ --ckpt "checkpoints/deeplabv3plus_mobilenet_cityscapes.pth" --continue_training
 ```
 
 ### Predict example image (saves result to folder test_results)
 ```shell
-python twm/external/deeplab_forked/predict.py --input data/cityscapes/leftImg8bit/val/frankfurt/frankfurt_000001_032711_leftImg8bit_foggy_beta_0.01.png \
---dataset cityscapes --model deeplabv3plus_mobilenet --ckpt checkpoints/cityscapes.pth --save_val_results_to test_results
+pdm run python3 twm/external/deeplab_forked/predict.py --input data/cityscapes/leftImg8bit/val/frankfurt/frankfurt_000001_032711_leftImg8bit_foggy_beta_0.01.png \
+--dataset cityscapes --model deeplabv3plus_mobilenet --ckpt "checkpoints/deeplabv3plus_mobilenet_cityscapes.pth" --save_val_results_to test_results
+```
+
+# Usefull commands:
+
+Updating submodules to remote branch (submodule update)
+```shell
+git submodule update --remote --merge
 ```
