@@ -303,3 +303,5 @@ pyrightconfig.json
 data/
 .env
 .pdm-python
+checkpoints
+test_results
