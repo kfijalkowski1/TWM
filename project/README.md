@@ -28,8 +28,31 @@ just get-data
 ```
 Note: you will be prompted to enter your CityScapes credentials
 
-Fetch external repositories:
+Fetch pre-trained models:
 
 ```shell
-just fetch-repos
+just get-models
+```
+
+## Running deeplab models
+
+### Train on foggy data
+
+Run the command on forked deeplab repo to train with foggy data:
+```shell
+pdm run python3 twm/external/deeplab_forked/main.py --data_root "data/cityscapes_foggy" --dataset "cityscapes"\
+ --ckpt "checkpoints/deeplabv3plus_mobilenet_cityscapes.pth" --continue_training
+```
+
+### Predict example image (saves result to folder test_results)
+```shell
+pdm run python3 twm/external/deeplab_forked/predict.py --input data/cityscapes_foggy/leftImg8bit/val/frankfurt/frankfurt_000001_032711_leftImg8bit_foggy_beta_0.01.png \
+--dataset cityscapes --model deeplabv3plus_mobilenet --ckpt "checkpoints/deeplabv3plus_mobilenet_cityscapes.pth" --save_val_results_to test_results
+```
+
+# Usefull commands:
+
+Updating submodules to remote branch (submodule update)
+```shell
+git submodule update --remote --merge
 ```
