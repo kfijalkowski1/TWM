@@ -36,17 +36,35 @@ just fetch-repos
 
 ## Running deeplab models
 
-### Train on foggy data
-(foggy data inside data folder have to be without surfix, and normal data with some surfix eg. org)
+### Finetune on foggy data
 
 Run the command on forked deeplab repo to train with foggy data:
+
 ```shell
-python twm/external/deeplab_forked/main.py --data_root "data/cityscapes" --dataset "cityscapes"\
- --ckpt "checkpoint/cityscapes.pth" --continue_training
+pdm run python3 train_test_deeplab.py \
+    --data_root "data/cityscapes_foggy" \
+    --dataset "cityscapes" \
+    --val_interval 2000 \
+    --lr 0.002  \
+    --crop_size 768 \
+    --batch_size 16 \
+    --output_stride 16 \
+    --ckpt "checkpoints/deeplabv3plus_mobilenet_cityscapes.pth" \
+    --continue_training \
+    --enable_wandb \
+    --wandb_team tomasz-owienko-stud-warsaw-university-of-technology \
+    --wandb_project twm
 ```
 
-### Predict example image (saves result to folder test_results)
+If the model cannot fit on your GPU, reduce the batch size. Please do not change `--crop_size` and `--output_stride`, as they strongly affect model preformance.
+
+### Predict masks from example image / all images in specified directory (saves result to folder `test_results`)
+
 ```shell
-python twm/external/deeplab_forked/predict.py --input data/cityscapes/leftImg8bit/val/frankfurt/frankfurt_000001_032711_leftImg8bit_foggy_beta_0.01.png \
---dataset cityscapes --model deeplabv3plus_mobilenet --ckpt checkpoints/cityscapes.pth --save_val_results_to test_results
+pdm run predict_deeplab.py \
+    --input data/cityscapes_foggy/leftImg8bit/val/frankfurt/frankfurt_000001_032711_leftImg8bit_foggy_beta_0.02.png \
+    --dataset cityscapes \
+    --model deeplabv3plus_mobilenet \
+    --ckpt checkpoints/deeplabv3plus_mobilenet_cityscapes.pth \
+    --save_val_results_to test_results
 ```

@@ -305,3 +305,4 @@ data/
 .pdm-python
 checkpoints/
 wandb/
+test_results/
