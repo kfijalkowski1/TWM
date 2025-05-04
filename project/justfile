@@ -10,6 +10,11 @@ setup:
     read -s -p "Paste your wandb token: " TOKEN
     perl -pe "s/^(WANDB_TOKEN=).*$/\1\Q$TOKEN\E/" .env.sample > .env
 
+    git submodule update --init --recursive
+    touch twm/external/deeplab_v3plus/__init__.py
+    touch twm/external/dehazeformer/__init__.py
+    touch twm/external/deeplab_forked/__init__.py
+
 # download cityscapes and foggy cityscapes datasets
 get-data:
     #!/usr/bin/env -S bash -euo pipefail
@@ -22,17 +27,20 @@ get-data:
     mkdir -p data
     cd data
     USERNAME=""
-    read -p "Enter username: " USERNAME
+    read -p "Enter CityScapes username: " USERNAME
     PASSWORD=""
-    read -s -p "Enter password: " PASSWORD
+    read -s -p "Enter CityScapes password: " PASSWORD
     mkdir -p cityscapes
+    mkdir -p cityscapes_foggy
     mkdir -p temp
 
     heading "Fetching ground truth data..."
     wget --keep-session-cookies --save-cookies=temp/cookies.txt --post-data "username=$USERNAME&password=$PASSWORD&submit=Login" https://www.cityscapes-dataset.com/login/ -O /dev/null
     wget --load-cookies temp/cookies.txt --content-disposition https://www.cityscapes-dataset.com/file-handling/?packageID=1 -O temp/gtFine_trainvaltest.zip
     unzip temp/gtFine_trainvaltest.zip -d temp/gtFine_trainvaltest
-    mv temp/gtFine_trainvaltest/gtFine cityscapes/gtFine
+    cp -r temp/gtFine_trainvaltest/gtFine cityscapes/gtFine
+    cp -r temp/gtFine_trainvaltest/gtFine cityscapes_foggy/gtFine
+    rm -rf temp/gtFine_trainvaltest/gtFine
     rm temp/gtFine_trainvaltest.zip
 
     heading "Fetching CityScapes..."
@@ -46,7 +54,7 @@ get-data:
     wget --keep-session-cookies --save-cookies=temp/cookies.txt --post-data "username=$USERNAME&password=$PASSWORD&submit=Login" https://www.cityscapes-dataset.com/login/ -O /dev/null
     wget --load-cookies temp/cookies.txt --content-disposition https://www.cityscapes-dataset.com/file-handling/?packageID=29 -O temp/leftImg8bit_trainvaltest_foggy.zip
     unzip temp/leftImg8bit_trainvaltest_foggy.zip -d temp/foggy_cityscapes
-    mv temp/foggy_cityscapes/leftImg8bit_foggy cityscapes/leftImg8bit_foggy
+    mv temp/foggy_cityscapes/leftImg8bit_foggy cityscapes_foggy/leftImg8bit
     rm temp/leftImg8bit_trainvaltest_foggy.zip
 
     heading "Fetching pretrained ..."
@@ -57,10 +65,8 @@ get-data:
     rm -rf temp
     heading "DONE!"
 
-# fetch external repositories used by the project
-fetch-repos:
+get-models:
     #!/usr/bin/env -S bash -euo pipefail
-    git submodule update --init --recursive
-    touch twm/external/deeplab_v3plus/__init__.py
-    touch twm/external/dehazeformer/__init__.py
-    touch twm/external/deeplab_forked/__init__.py
+    heading "Fetching pretrained DeepLabV3Plus..."
+    mkdir -p checkpoints
+    wget -O checkpoints/deeplabv3plus_mobilenet_cityscapes.pth "https://www.dropbox.com/scl/fo/i4k86qqiuzy33aawug287/AJZbFCPIvT521xW8lekSDr8/best_deeplabv3plus_mobilenet_cityscapes_os16.pth?rlkey=fgm7rgpeankeh9394j492sxif&dl=1"
