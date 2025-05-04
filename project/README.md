@@ -51,6 +51,7 @@ pdm run python3 train_test_deeplab.py \
     --output_stride 16 \
     --ckpt "checkpoints/deeplabv3plus_mobilenet_cityscapes.pth" \
     --continue_training \
+    --ignore_previous_best_score \
     --enable_wandb \
     --wandb_team tomasz-owienko-stud-warsaw-university-of-technology \
     --wandb_project twm
