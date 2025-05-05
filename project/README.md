@@ -77,11 +77,12 @@ pdm run python3 twm/external/dehazeformer_forked/train.py \
   --config twm/external/dehazeformer_forked/configs/outdoor/dehazeformer-t.json
 ```
 
-Note: If you encounter OutOfMemoryError, try one or both of the following solutions:
-- Reduce the number of workers with argument e.g. `--num_workers 4` (default value is 16).
-- Lower the `batch_size` or `patch_size` value in the config file:
+Note: If you encounter `OutOfMemoryError`, try following solutions:
+- Set number of workers with argument e.g. `--num_workers 4` (default value is 16). For optimal performance set it to number of CPU cores
+- Lower `batch_size` or `patch_size` value in the config file:
 `project/twm/external/dehazeformer_forked/configs/outdoor/dehazeformer-t.json`.
-- add `--gpu` argument if applicable
+- Add `--gpu` argument to ensure model runs on GPU
+- Set the environment variable `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True`. This may reduce VRAM fragmentation and improve memory efficiency
 
 ### Evaluation
 Saves the results to results/cityscapes_foggy/dehazeformer-t
