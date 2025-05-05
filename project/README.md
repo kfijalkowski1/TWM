@@ -54,27 +54,42 @@ pdm run python3 twm/external/deeplab_forked/predict.py --input data/cityscapes_f
 
 ## Running DehazeFormer model
 
-### Prepare test image file
+### Train from scratch on foggy data
+
+```shell
+pdm run python3 twm/external/dehazeformer_forked/train.py \
+  --model dehazeformer-t \
+  --save_dir checkpoints \
+  --data_dir data/ \
+  --dataset cityscapes_foggy \
+  --config twm/external/dehazeformer_forked/configs/outdoor/dehazeformer-t.json
 ```
-mkdir -p data/cityscapes_test/cityscapes/test/hazy
-mkdir -p data/cityscapes_test/cityscapes/test/GT
 
-cp data/cityscapes_foggy/leftImg8bit/val/frankfurt/frankfurt_000001_032711_leftImg8bit_foggy_beta_0.01.png \
-   data/cityscapes_test/cityscapes/test/hazy/frankfurt_000001_032711_leftImg8bit.png
+### Finetune on foggy data (not yet implemented)
 
-cp data/cityscapes/leftImg8bit/val/frankfurt/frankfurt_000001_032711_leftImg8bit.png \
-   data/cityscapes_test/cityscapes/test/GT/
+```shell
+pdm run python3 twm/external/dehazeformer_forked/train.py \
+  --model dehazeformer-t \
+  --save_dir checkpoints \
+  --ckpt checkpoints/dehazeformer-t.pth \
+  --data_dir data/ \
+  --dataset cityscapes_foggy \
+  --config twm/external/dehazeformer_forked/configs/outdoor/dehazeformer-t.json
 ```
 
 ### Evaluation
-Saves the results to results/cityscapes/dehazeformer-t
+
+Saves the results to results/cityscapes_foggy/dehazeformer-t
+
 ```
+mkdir -p results
+
 pdm run python3 twm/external/dehazeformer_forked/test.py \
   --model dehazeformer-t \
-  --save_dir checkpoints \
-  --data_dir data/cityscapes_test \
-  --dataset cityscapes \
-  --exp .
+  --ckpt checkpoints/dehazeformer-t.pth \
+  --data_dir data/ \
+  --dataset cityscapes_foggy \
+  --config twm/external/dehazeformer_forked/configs/outdoor/dehazeformer-t.json
 ```
 
 # Usefull commands:
