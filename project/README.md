@@ -81,7 +81,10 @@ pdm run python3 twm/external/dehazeformer_forked/train.py \
   --save_dir checkpoints \
   --data_dir data/ \
   --dataset cityscapes_foggy \
-  --config twm/external/dehazeformer_forked/configs/outdoor/dehazeformer-t.json
+  --config twm/external/dehazeformer_forked/configs/outdoor/dehazeformer-t.json \
+  --enable_wandb \
+  --wandb_team tomasz-owienko-stud-warsaw-university-of-technology \
+  --wandb_project twm
 ```
 
 ### Finetune on foggy data (not yet implemented)
@@ -93,7 +96,10 @@ pdm run python3 twm/external/dehazeformer_forked/train.py \
   --ckpt checkpoints/dehazeformer-t.pth \
   --data_dir data/ \
   --dataset cityscapes_foggy \
-  --config twm/external/dehazeformer_forked/configs/outdoor/dehazeformer-t.json
+  --config twm/external/dehazeformer_forked/configs/outdoor/dehazeformer-t.json \
+  --enable_wandb \
+  --wandb_team tomasz-owienko-stud-warsaw-university-of-technology \
+  --wandb_project twm
 ```
 
 ### Evaluation
@@ -108,7 +114,10 @@ pdm run python3 twm/external/dehazeformer_forked/test.py \
   --ckpt checkpoints/dehazeformer-t.pth \
   --data_dir data/ \
   --dataset cityscapes_foggy \
-  --config twm/external/dehazeformer_forked/configs/outdoor/dehazeformer-t.json
+  --config twm/external/dehazeformer_forked/configs/outdoor/dehazeformer-t.json \
+  --enable_wandb \
+  --wandb_team tomasz-owienko-stud-warsaw-university-of-technology \
+  --wandb_project twm
 ```
 
 # Useful commands:
