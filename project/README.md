@@ -7,6 +7,8 @@
   - `pipx install pdm`
 - [just](https://just.systems/man/en/)
   - `pipx install rust-just`
+- [gdown](https://github.com/wkentaro/gdown)
+  - `pipx install gdown`
 - [Weights & Biases account](https://wandb.ai/site/)
 - [CityScapes account](https://www.cityscapes-dataset.com/)
 - ~74GB of free disk space (43GB after downloaded zipfiles are removed)
@@ -48,6 +50,46 @@ pdm run python3 twm/external/deeplab_forked/main.py --data_root "data/cityscapes
 ```shell
 pdm run python3 twm/external/deeplab_forked/predict.py --input data/cityscapes_foggy/leftImg8bit/val/frankfurt/frankfurt_000001_032711_leftImg8bit_foggy_beta_0.01.png \
 --dataset cityscapes --model deeplabv3plus_mobilenet --ckpt "checkpoints/deeplabv3plus_mobilenet_cityscapes.pth" --save_val_results_to test_results
+```
+
+## Running DehazeFormer model
+
+### Train from scratch on foggy data
+
+```shell
+pdm run python3 twm/external/dehazeformer_forked/train.py \
+  --model dehazeformer-t \
+  --save_dir checkpoints \
+  --data_dir data/ \
+  --dataset cityscapes_foggy \
+  --config twm/external/dehazeformer_forked/configs/outdoor/dehazeformer-t.json
+```
+
+### Finetune on foggy data (not yet implemented)
+
+```shell
+pdm run python3 twm/external/dehazeformer_forked/train.py \
+  --model dehazeformer-t \
+  --save_dir checkpoints \
+  --ckpt checkpoints/dehazeformer-t.pth \
+  --data_dir data/ \
+  --dataset cityscapes_foggy \
+  --config twm/external/dehazeformer_forked/configs/outdoor/dehazeformer-t.json
+```
+
+### Evaluation
+
+Saves the results to results/cityscapes_foggy/dehazeformer-t
+
+```
+mkdir -p results
+
+pdm run python3 twm/external/dehazeformer_forked/test.py \
+  --model dehazeformer-t \
+  --ckpt checkpoints/dehazeformer-t.pth \
+  --data_dir data/ \
+  --dataset cityscapes_foggy \
+  --config twm/external/dehazeformer_forked/configs/outdoor/dehazeformer-t.json
 ```
 
 # Usefull commands:

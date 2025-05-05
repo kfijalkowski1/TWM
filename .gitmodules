@@ -10,3 +10,6 @@
 [submodule "project/project/twm/external/deeplab_forked"]
 	path = project/project/twm/external/deeplab_forked
 	url = https://github.com/kfijalkowski1/TWM-DeepLabV3Plus-Pytorch.git
+[submodule "project/twm/external/dehazeformer_forked"]
+	path = project/twm/external/dehazeformer_forked
+	url = https://github.com/krzysztofkluczynski/DehazeFormer.git
