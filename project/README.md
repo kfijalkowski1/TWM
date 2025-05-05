@@ -43,7 +43,7 @@ just get-models
 Run the command on forked deeplab repo to train with foggy data:
 
 ```shell
-pdm run python3 train_test_deeplab.py \
+./wrapper.sh twm/external/deeplab_forked/main.py \
     --data_root "data/cityscapes_foggy" \
     --dataset "cityscapes" \
     --val_interval 2000 \
@@ -63,7 +63,7 @@ If the model cannot fit on your GPU, reduce the batch size. Please do not change
 ### Predict masks from example image / all images in specified directory (saves result to folder `test_results`)
 
 ```shell
-pdm run predict_deeplab.py \
+./wrapper.sh twm/external/deeplab_forked/predict.py \
     --input data/cityscapes_foggy/leftImg8bit/val/frankfurt/frankfurt_000001_032711_leftImg8bit_foggy_beta_0.02.png \
     --dataset cityscapes \
     --model deeplabv3plus_mobilenet \
