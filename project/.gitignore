@@ -306,3 +306,4 @@ data/
 checkpoints/
 wandb/
 test_results/
+results/
