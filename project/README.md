@@ -43,7 +43,7 @@ just get-models
 Run the command on forked deeplab repo to train with foggy data:
 
 ```shell
-./wrapper.sh twm/external/deeplab_forked/main.py \
+./wrapper.sh pdm run twm/external/deeplab_forked/main.py \
     --data_root "data/cityscapes_foggy" \
     --dataset "cityscapes" \
     --val_interval 2000 \
@@ -69,7 +69,7 @@ You can also resume training from a checkpoint saved on Weights & Biases - in th
 Eg.:
 
 ```shell
-pdm run python3 train_test_deeplab.py \
+./wrapper.sh pdm run python3 train_test_deeplab.py \
   # other args
   --wandb_restore_ckpt checkpoints/best_deeplabv3plus_mobilenet_cityscapes_os16.pth \
   --wandb_restore_run_path tomasz-owienko-stud-warsaw-university-of-technology/twm/abcdefgh
@@ -78,7 +78,7 @@ pdm run python3 train_test_deeplab.py \
 ### Predict masks from example image / all images in specified directory (saves result to folder `test_results`)
 
 ```shell
-./wrapper.sh twm/external/deeplab_forked/predict.py \
+./wrapper.sh pdm run twm/external/deeplab_forked/predict.py \
     --input data/cityscapes_foggy/leftImg8bit/val/frankfurt/frankfurt_000001_032711_leftImg8bit_foggy_beta_0.02.png \
     --dataset cityscapes \
     --model deeplabv3plus_mobilenet \
@@ -89,7 +89,7 @@ pdm run python3 train_test_deeplab.py \
 Again, checkpoint can also be loaded from wandb:
 
 ```shell
-pdm run python3 predict_deeplab.py \
+./wrapper.sh pdm run python3 predict_deeplab.py \
   # other args
   --wandb_restore_ckpt checkpoints/best_deeplabv3plus_mobilenet_cityscapes_os16.pth \
   --wandb_restore_run_path tomasz-owienko-stud-warsaw-university-of-technology/twm/abcdefgh
@@ -100,7 +100,7 @@ pdm run python3 predict_deeplab.py \
 ### Finetune on foggy data
 
 ```shell
-pdm run python3 twm/external/dehazeformer_forked/train.py \
+./wrapper.sh pdm run python3 twm/external/dehazeformer_forked/train.py \
   --model dehazeformer-t \
   --save_dir checkpoints \
   --ckpt checkpoints/dehazeformer-t.pth \
@@ -132,7 +132,7 @@ Saves the results to results/cityscapes_foggy/dehazeformer-t
 ```shell
 mkdir -p results
 
-pdm run python3 twm/external/dehazeformer_forked/test.py \
+./wrapper.sh pdm run python3 twm/external/dehazeformer_forked/test.py \
   --model dehazeformer-t \
   --ckpt checkpoints/outdoor/dehazeformer-t.pth \
   --data_dir data/ \
