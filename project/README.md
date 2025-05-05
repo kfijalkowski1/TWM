@@ -102,8 +102,14 @@ pdm run python3 twm/external/dehazeformer_forked/train.py \
   --wandb_project twm
 ```
 
-### Evaluation
+Note: If you encounter `OutOfMemoryError`, try following solutions:
+- Set number of workers with argument e.g. `--num_workers 4` (default value is 16). For optimal performance set it to number of CPU cores
+- Lower `batch_size` or `patch_size` value in the config file:
+`project/twm/external/dehazeformer_forked/configs/outdoor/dehazeformer-t.json`.
+- Add `--gpu` argument to ensure model runs on GPU
+- Set the environment variable `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True`. This may reduce VRAM fragmentation and improve memory efficiency
 
+### Evaluation
 Saves the results to results/cityscapes_foggy/dehazeformer-t
 
 ```shell
@@ -111,7 +117,7 @@ mkdir -p results
 
 pdm run python3 twm/external/dehazeformer_forked/test.py \
   --model dehazeformer-t \
-  --ckpt checkpoints/dehazeformer-t.pth \
+  --ckpt checkpoints/outdoor/dehazeformer-t.pth \
   --data_dir data/ \
   --dataset cityscapes_foggy \
   --config twm/external/dehazeformer_forked/configs/outdoor/dehazeformer-t.json \
