@@ -111,7 +111,7 @@ pdm run python3 twm/external/dehazeformer_forked/train.py \
   --wandb_project twm
 ```
 
-### Finetune on foggy data (not yet implemented)
+### Finetune on foggy data
 
 ```shell
 pdm run python3 twm/external/dehazeformer_forked/train.py \
