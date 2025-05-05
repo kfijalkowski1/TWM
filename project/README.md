@@ -77,8 +77,13 @@ pdm run python3 twm/external/dehazeformer_forked/train.py \
   --config twm/external/dehazeformer_forked/configs/outdoor/dehazeformer-t.json
 ```
 
-### Evaluation
+Note: If you encounter OutOfMemoryError, try one or both of the following solutions:
+- Reduce the number of workers with argument e.g. `--num_workers 4` (default value is 16).
+- Lower the `batch_size` or `patch_size` value in the config file:
+`project/twm/external/dehazeformer_forked/configs/outdoor/dehazeformer-t.json`.
+- add `--gpu` argument if applicable
 
+### Evaluation
 Saves the results to results/cityscapes_foggy/dehazeformer-t
 
 ```
@@ -86,7 +91,7 @@ mkdir -p results
 
 pdm run python3 twm/external/dehazeformer_forked/test.py \
   --model dehazeformer-t \
-  --ckpt checkpoints/dehazeformer-t.pth \
+  --ckpt checkpoints/outdoor/dehazeformer-t.pth \
   --data_dir data/ \
   --dataset cityscapes_foggy \
   --config twm/external/dehazeformer_forked/configs/outdoor/dehazeformer-t.json
