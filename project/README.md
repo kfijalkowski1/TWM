@@ -97,20 +97,6 @@ pdm run python3 predict_deeplab.py \
 
 ## Running DehazeFormer model
 
-### Train from scratch on foggy data
-
-```shell
-pdm run python3 twm/external/dehazeformer_forked/train.py \
-  --model dehazeformer-t \
-  --save_dir checkpoints \
-  --data_dir data/ \
-  --dataset cityscapes_foggy \
-  --config twm/external/dehazeformer_forked/configs/outdoor/dehazeformer-t.json \
-  --enable_wandb \
-  --wandb_team tomasz-owienko-stud-warsaw-university-of-technology \
-  --wandb_project twm
-```
-
 ### Finetune on foggy data
 
 ```shell
@@ -121,10 +107,16 @@ pdm run python3 twm/external/dehazeformer_forked/train.py \
   --data_dir data/ \
   --dataset cityscapes_foggy \
   --config twm/external/dehazeformer_forked/configs/outdoor/dehazeformer-t.json \
+  --ignore_previous_best_score \
   --enable_wandb \
   --wandb_team tomasz-owienko-stud-warsaw-university-of-technology \
   --wandb_project twm
 ```
+
+Same as with DeepLab, you can load wandb checkpoints by ommitting `--ckpt` and specifying the following args;
+
+- `--wandb_restore_run_path` - run path of a run which holds the desired checkpoint
+- `--wandb_restore_ckpt` - path to checkpoint relative to run's root
 
 Note: If you encounter `OutOfMemoryError`, try following solutions:
 - Set number of workers with argument e.g. `--num_workers 4` (default value is 16). For optimal performance set it to number of CPU cores
@@ -134,6 +126,7 @@ Note: If you encounter `OutOfMemoryError`, try following solutions:
 - Set the environment variable `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True`. This may reduce VRAM fragmentation and improve memory efficiency
 
 ### Evaluation
+
 Saves the results to results/cityscapes_foggy/dehazeformer-t
 
 ```shell
@@ -149,6 +142,8 @@ pdm run python3 twm/external/dehazeformer_forked/test.py \
   --wandb_team tomasz-owienko-stud-warsaw-university-of-technology \
   --wandb_project twm
 ```
+
+Wandb loading is also supported through `--wandb_restore_run_path` and `--wandb_restore_ckpt`
 
 # Useful commands:
 
