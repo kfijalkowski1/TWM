@@ -7,6 +7,8 @@
   - `pipx install pdm`
 - [just](https://just.systems/man/en/)
   - `pipx install rust-just`
+- [gdown](https://github.com/wkentaro/gdown)
+  - `pipx install gdown`
 - [Weights & Biases account](https://wandb.ai/site/)
 - [CityScapes account](https://www.cityscapes-dataset.com/)
 - ~74GB of free disk space (43GB after downloaded zipfiles are removed)
@@ -48,6 +50,31 @@ pdm run python3 twm/external/deeplab_forked/main.py --data_root "data/cityscapes
 ```shell
 pdm run python3 twm/external/deeplab_forked/predict.py --input data/cityscapes_foggy/leftImg8bit/val/frankfurt/frankfurt_000001_032711_leftImg8bit_foggy_beta_0.01.png \
 --dataset cityscapes --model deeplabv3plus_mobilenet --ckpt "checkpoints/deeplabv3plus_mobilenet_cityscapes.pth" --save_val_results_to test_results
+```
+
+## Running DehazeFormer model
+
+### Prepare test image file
+```
+mkdir -p data/cityscapes_test/cityscapes/test/hazy
+mkdir -p data/cityscapes_test/cityscapes/test/GT
+
+cp data/cityscapes_foggy/leftImg8bit/val/frankfurt/frankfurt_000001_032711_leftImg8bit_foggy_beta_0.01.png \
+   data/cityscapes_test/cityscapes/test/hazy/frankfurt_000001_032711_leftImg8bit.png
+
+cp data/cityscapes/leftImg8bit/val/frankfurt/frankfurt_000001_032711_leftImg8bit.png \
+   data/cityscapes_test/cityscapes/test/GT/
+```
+
+### Evaluation
+Saves the results to results/cityscapes/dehazeformer-t
+```
+pdm run python3 twm/external/dehazeformer_forked/test.py \
+  --model dehazeformer-t \
+  --save_dir checkpoints \
+  --data_dir data/cityscapes_test \
+  --dataset cityscapes \
+  --exp .
 ```
 
 # Usefull commands:

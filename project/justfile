@@ -14,6 +14,8 @@ setup:
     touch twm/external/deeplab_v3plus/__init__.py
     touch twm/external/dehazeformer/__init__.py
     touch twm/external/deeplab_forked/__init__.py
+    touch twm/external/dehazeformer_forked/__init__.py
+
 
 # download cityscapes and foggy cityscapes datasets
 get-data:
@@ -63,6 +65,16 @@ get-data:
 
 get-models:
     #!/usr/bin/env -S bash -euo pipefail
-    heading "Fetching pretrained DeepLabV3Plus..."
+    heading () {
+         BLUE_BG=$'\033[44m'
+         NC=$'\e[0m'
+         echo "${BLUE_BG}$1${NC}"
+     }
+
     mkdir -p checkpoints
+
+    heading "Fetching pretrained DeepLabV3Plus..."
     wget -O checkpoints/deeplabv3plus_mobilenet_cityscapes.pth "https://www.dropbox.com/scl/fo/i4k86qqiuzy33aawug287/AJZbFCPIvT521xW8lekSDr8/best_deeplabv3plus_mobilenet_cityscapes_os16.pth?rlkey=fgm7rgpeankeh9394j492sxif&dl=1"
+
+    heading "Fetching pretrained DehazeFormer..."
+    gdown 1bjSzDGGCjdFB-ixEDPDMm8bmke1PBtkp -O checkpoints/dehazeformer-t.pth

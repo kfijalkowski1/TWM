@@ -305,3 +305,4 @@ data/
 .pdm-python
 checkpoints
 test_results
+results
