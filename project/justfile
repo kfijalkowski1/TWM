@@ -59,6 +59,10 @@ get-data:
     mv temp/foggy_cityscapes/leftImg8bit_foggy cityscapes_foggy/leftImg8bit
     rm temp/leftImg8bit_trainvaltest_foggy.zip
 
+    heading "Fetching pretrained ..."
+    mkdir checkpoints
+    wget -O checkpoints/cityscapes.pth  https://www.dropbox.com/scl/fo/i4k86qqiuzy33aawug287/ABz2JiKdDqjwvDDzMHpeKZI\?e\=1\&preview\=best_deeplabv3plus_mobilenet_cityscapes_os16.pth\&rlkey\=fgm7rgpeankeh9394j492sxif\&st\=mxtfkqqh\&dl\=0
+
     heading "Cleaning up..."
     rm -rf temp
     heading "DONE!"

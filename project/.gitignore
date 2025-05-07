@@ -303,6 +303,8 @@ pyrightconfig.json
 data/
 .env
 .pdm-python
-checkpoints
-test_results
-results
+checkpoints/
+wandb/
+test_results/
+results/
+logs/
