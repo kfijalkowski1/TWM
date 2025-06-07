@@ -75,6 +75,28 @@ pdm run python3 train_test_deeplab.py \
   --wandb_restore_run_path tomasz-owienko-stud-warsaw-university-of-technology/twm/abcdefgh
 ```
 
+### Finetune using sweep:
+
+```shell
+python3 twm/external/deeplab_forked/main.py \
+    --data_root "data/cityscapes_foggy" \
+    --dataset "cityscapes" \
+    --lr 0.002  \
+    --crop_size 768 \
+    --batch_size 4 \
+    --output_stride 16 \
+    --continue_training \
+    --ignore_previous_best_score \
+    --enable_wandb \
+    --wandb_team tomasz-owienko-stud-warsaw-university-of-technology \
+    --wandb_project twm \
+    --ckpt "checkpoints/deeplabv3plus_mobilenet_cityscapes.pth" \
+    --wandb_sweep_config twm/external/deeplab_forked/sweep/sweep_config.yaml \
+    --n_epochs 3
+```
+
+You can also join an existing sweep by specifying `--wandb_sweep_id <SWEEP_ID>` instead of `--wandb_sweep_config <CONFIG>`
+
 ### Predict masks from example image / all images in specified directory (saves result to folder `test_results`)
 
 ```shell
@@ -124,6 +146,27 @@ Note: If you encounter `OutOfMemoryError`, try following solutions:
 `project/twm/external/dehazeformer_forked/configs/outdoor/dehazeformer-t.json`.
 - Add `--gpu` argument to ensure model runs on GPU
 - Set the environment variable `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True`. This may reduce VRAM fragmentation and improve memory efficiency
+
+### Finetune using sweep
+
+```shell
+pdm run python3 twm/external/dehazeformer_forked/train.py \
+  --model dehazeformer-t \
+  --save_dir checkpoints \
+  --ckpt checkpoints/dehazeformer-t.pth \
+  --data_dir data/ \
+  --dataset cityscapes_foggy \
+  --config twm/external/dehazeformer_forked/configs/outdoor/dehazeformer-t.json \
+  --ignore_previous_best_score \
+  --enable_wandb \
+  --wandb_team tomasz-owienko-stud-warsaw-university-of-technology \
+  --wandb_project twm \
+  --n_epochs 1 \
+  --wandb_sweep_config twm/external/dehazeformer_forked/sweep/sweep_config.yaml \
+  --num_workers 12
+```
+
+You can also join an existing sweep by specifying `--wandb_sweep_id <SWEEP_ID>` instead of `--wandb_sweep_config <CONFIG>`
 
 ### Evaluation
 
